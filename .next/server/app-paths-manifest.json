@@ -1,8 +1,11 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/products/page": "app/products/page.js",
+  "/api/seller/stats/route": "app/api/seller/stats/route.js",
+  "/api/seller/orders/route": "app/api/seller/orders/route.js",
+  "/api/seller/products/route": "app/api/seller/products/route.js",
   "/login/page": "app/login/page.js",
+  "/products/page": "app/products/page.js",
+  "/register/page": "app/register/page.js",
   "/admin/page": "app/admin/page.js",
-  "/seller/page": "app/seller/page.js",
-  "/register/page": "app/register/page.js"
+  "/seller/page": "app/seller/page.js"
 }
