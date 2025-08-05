@@ -11,9 +11,9 @@ export default function Footer() {
           {/* Company Info */}
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
-              <img 
-                src="/logo.png" 
-                alt="Hamro Gachhiya Logo" 
+              <img
+                src="/logo.png"
+                alt="Hamro Gachhiya Logo"
                 className="w-100% h-100% object-contain"
               />
             </div>
@@ -106,11 +106,11 @@ export default function Footer() {
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <MapPin className="w-5 h-5 text-orange-500" />
-                <span className="text-gray-400">123 Commerce St, City, State 12345</span>
+                <span className="text-gray-400">Sundarharaincha-03, Gachhiya, Morang, Koshi Province, Nepal</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-orange-500" />
-                <span className="text-gray-400">+1 (555) 123-4567</span>
+                <span className="text-gray-400">+977 9746984367</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-orange-500" />
@@ -124,7 +124,10 @@ export default function Footer() {
         <div className="border-t border-gray-800 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm">
-              © 2024 Hamro Gachhiya. All rights reserved.
+              &copy; {new Date().getFullYear()} Hamro Gachhiya. All rights reserved.
+            </p>
+            <p className="mt-1  text-sm">
+              Developed by <a href="https://sauravphuyal.com.np" target="_blank" rel="noopener noreferrer" className="hover:text-orange-600 transition">Saurav Phuyal</a>
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <Link href="/privacy" className="text-gray-400 hover:text-white text-sm transition-colors">

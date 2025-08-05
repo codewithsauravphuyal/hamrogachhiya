@@ -16,20 +16,12 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, showStore = false }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const { addToCart } = useCartStore();
+  const { addItem } = useCartStore();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlistStore();
   const isWishlisted = isInWishlist(product.id);
 
   const handleAddToCart = () => {
-    addToCart({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.images[0] || '',
-      quantity: 1,
-      storeId: product.storeId,
-      storeName: product.storeName
-    });
+    addItem(product, 1);
     toast.success('Added to cart!');
   };
 
@@ -114,7 +106,7 @@ export default function ProductCard({ product, showStore = false }: ProductCardP
 
       {/* Product Image */}
       <Link href={`/products/${product.id}`} className="block">
-        <div className="relative aspect-[4/3] overflow-hidden">
+        <div className="relative aspect-[4/3] sm:aspect-[4/3] overflow-hidden">
           <img
             src={product.images[0] || '/placeholder-product.jpg'}
             alt={product.name}
@@ -139,7 +131,7 @@ export default function ProductCard({ product, showStore = false }: ProductCardP
       </Link>
 
       {/* Product Info */}
-      <div className="p-3">
+      <div className="p-2 sm:p-3 md:p-4">
         {showStore && (
           <p className="text-sm text-orange-600 hover:text-orange-700 font-medium mb-1">
             {product.storeName}
@@ -151,18 +143,18 @@ export default function ProductCard({ product, showStore = false }: ProductCardP
         </div>
 
         <Link href={`/products/${product.id}`}>
-          <h3 className="font-semibold text-gray-900 dark:text-white mb-1 line-clamp-2 hover:text-orange-600 transition-colors text-sm">
+          <h3 className="font-semibold text-gray-900 dark:text-white mb-1 line-clamp-2 hover:text-orange-600 transition-colors text-xs sm:text-sm md:text-base">
             {product.name}
           </h3>
         </Link>
 
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center space-x-2">
-            <span className="text-base font-bold text-gray-900 dark:text-white">
+            <span className="text-sm sm:text-base font-bold text-gray-900 dark:text-white">
               {formatPrice(product.price)}
             </span>
             {product.originalPrice && product.originalPrice > product.price && (
-              <span className="text-sm text-gray-500 line-through">
+              <span className="text-xs sm:text-sm text-gray-500 line-through">
                 {formatPrice(product.originalPrice)}
               </span>
             )}

@@ -165,7 +165,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-medium text-gray-900 dark:text-white">Phone</h3>
-                  <p className="text-gray-600 dark:text-gray-400">+1 (555) 123-4567</p>
+                  <p className="text-gray-600 dark:text-gray-400">+977 9746984367</p>
                   <p className="text-sm text-gray-500 dark:text-gray-500">Mon-Fri from 8am to 6pm</p>
                 </div>
               </div>
@@ -176,7 +176,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-medium text-gray-900 dark:text-white">Office</h3>
-                  <p className="text-gray-600 dark:text-gray-400">123 Commerce St, City, State 12345</p>
+                  <p className="text-gray-600 dark:text-gray-400">Sundarharaincha-03, Gachhiya, Morang, Koshi Province, Nepal</p>
                   <p className="text-sm text-gray-500 dark:text-gray-500">Visit us during business hours</p>
                 </div>
               </div>

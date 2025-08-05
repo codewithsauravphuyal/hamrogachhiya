@@ -41,7 +41,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden sm:flex items-center space-x-6 lg:space-x-8">
             <Link href="/products" className="text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
               Products
             </Link>
@@ -54,7 +54,7 @@ export default function Header() {
           </nav>
 
           {/* Search Bar */}
-          <div className="hidden lg:flex flex-1 max-w-md mx-8">
+          <div className="hidden sm:flex flex-1 max-w-md mx-4 lg:mx-8">
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <Input
@@ -67,13 +67,13 @@ export default function Header() {
 
           {/* Right Side Icons */}
           <div className="flex items-center space-x-2 md:space-x-4">
-            {/* Theme Toggle - Hidden on mobile */}
-            <div className="hidden md:block">
+            {/* Theme Toggle - Show on desktop */}
+            <div className="hidden sm:block">
               <ThemeToggle />
             </div>
 
-            {/* Cart - Hidden on mobile */}
-            <Link href="/cart" className="hidden md:block">
+            {/* Cart - Show on desktop */}
+            <Link href="/cart" className="hidden sm:block">
               <Button variant="ghost" size="icon" className="relative">
                 <ShoppingCart className="w-5 h-5" />
                 {itemCount > 0 && (
@@ -84,9 +84,9 @@ export default function Header() {
               </Button>
             </Link>
 
-            {/* User Menu - Hidden on mobile */}
+            {/* User Menu - Show on desktop */}
             {isAuthenticated ? (
-              <div className="hidden md:flex items-center space-x-2">
+              <div className="hidden sm:flex items-center space-x-2">
                 <span className="text-sm text-gray-700 dark:text-gray-300">
                   Hi, {user?.name?.split(' ')[0] || 'User'}
                 </span>
@@ -98,7 +98,7 @@ export default function Header() {
                 </Button>
               </div>
             ) : (
-              <div className="hidden md:flex items-center space-x-2">
+              <div className="hidden sm:flex items-center space-x-2">
                 <Link href="/login">
                   <Button variant="ghost">Login</Button>
                 </Link>
@@ -113,6 +113,7 @@ export default function Header() {
               variant="ghost"
               size="icon"
               onClick={toggleMenu}
+              className="sm:hidden"
             >
               {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </Button>

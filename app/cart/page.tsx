@@ -212,7 +212,7 @@ export default function CartPage() {
                 <div className="mt-4 text-center">
                   <Link
                     href="/"
-                    className="text-sm text-brand-600 hover:text-brand-700 font-medium"
+                    className="text-orange-600 hover:text-orange-500 font-medium"
                   >
                     Continue Shopping
                   </Link>

@@ -75,7 +75,7 @@ export default function CategoryGrid() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4 md:gap-6">
           {categories.map((category) => (
             <Link
               key={category.id}
@@ -83,7 +83,7 @@ export default function CategoryGrid() {
               className="group block"
             >
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700">
-                <div className="relative h-32 md:h-36">
+                <div className="relative h-24 sm:h-32 md:h-36 lg:h-40">
                   <img
                     src={category.image}
                     alt={category.name}
@@ -95,11 +95,11 @@ export default function CategoryGrid() {
                   </div>
                 </div>
                 
-                <div className="p-4">
-                  <h3 className="font-bold text-base text-gray-900 dark:text-white mb-1 group-hover:text-orange-600 transition-colors">
+                <div className="p-3 sm:p-4">
+                  <h3 className="font-bold text-sm sm:text-base md:text-lg text-gray-900 dark:text-white mb-1 group-hover:text-orange-600 transition-colors">
                     {category.name}
                   </h3>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                     {category.productCount} products
                   </p>
                 </div>
