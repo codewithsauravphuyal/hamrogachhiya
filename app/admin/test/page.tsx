@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/stores/auth-store';
-import { DashboardLayout } from '@/components/layout/dashboard-layout';
+import { AdminLayout } from '@/components/layout/admin-layout';
+import { DashboardContentSkeleton } from '@/components/ui/skeleton-loaders';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import toast from 'react-hot-toast';
@@ -71,15 +72,15 @@ export default function AdminTest() {
 
   if (!hasHydrated) {
     return (
-      <DashboardLayout title="Admin Test">
-        <div>Loading...</div>
-      </DashboardLayout>
+      <AdminLayout title="Admin Test">
+        <DashboardContentSkeleton />
+      </AdminLayout>
     );
   }
 
   if (!isAuthenticated || user?.role !== 'admin') {
     return (
-      <DashboardLayout title="Admin Test">
+      <AdminLayout title="Admin Test">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Access Denied
@@ -88,12 +89,12 @@ export default function AdminTest() {
             You don't have permission to access this page.
           </p>
         </div>
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   return (
-    <DashboardLayout title="Admin Test">
+    <AdminLayout title="Admin Test">
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Admin API Test</h1>
@@ -148,6 +149,6 @@ export default function AdminTest() {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </AdminLayout>
   );
 } 

@@ -313,7 +313,7 @@ export default function AdvancedFilters({
           
           {(filters.minPrice || filters.maxPrice) && (
             <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-purple-100 text-purple-800">
-              Price: ${filters.minPrice || '0'} - ${filters.maxPrice || '∞'}
+                              Price: रू {filters.minPrice || '0'} - रू {filters.maxPrice || '∞'}
               <button
                 onClick={() => {
                   handleFilterChange('minPrice', '');

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/stores/auth-store';
-import { DashboardLayout } from '@/components/layout/dashboard-layout';
+import { AdminLayout } from '@/components/layout/admin-layout';
 import { DashboardContentSkeleton } from '@/components/ui/skeleton-loaders';
 import { 
   ShoppingCart, 
@@ -183,15 +183,15 @@ export default function AdminManageOrders() {
 
   if (!hasHydrated) {
     return (
-      <DashboardLayout title="Manage Orders">
+      <AdminLayout title="Manage Orders">
         <DashboardContentSkeleton />
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   if (!isAuthenticated || user?.role !== 'admin') {
     return (
-      <DashboardLayout title="Manage Orders">
+      <AdminLayout title="Manage Orders">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Access Denied
@@ -200,12 +200,12 @@ export default function AdminManageOrders() {
             You don't have permission to access this page.
           </p>
         </div>
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   return (
-    <DashboardLayout title="Manage Orders">
+    <AdminLayout title="Manage Orders">
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -365,7 +365,7 @@ export default function AdminManageOrders() {
                                   <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
                                 </div>
                               </div>
-                              <p className="font-medium text-sm">${item.price.toFixed(2)}</p>
+                              <p className="font-medium text-sm">रू {item.price.toFixed(2)}</p>
                             </div>
                           ))}
                         </div>
@@ -423,6 +423,6 @@ export default function AdminManageOrders() {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </AdminLayout>
   );
 } 

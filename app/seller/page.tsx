@@ -229,7 +229,7 @@ export default function SellerDashboard() {
               <TrendingUp className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">${stats?.totalRevenue?.toFixed(2) || '0.00'}</div>
+                             <div className="text-2xl font-bold">रू {stats?.totalRevenue?.toFixed(2) || '0.00'}</div>
               <p className="text-xs text-muted-foreground">
                 All time sales
               </p>
@@ -343,7 +343,7 @@ export default function SellerDashboard() {
                       <div className="text-sm">
                         {order.items.length} item{order.items.length !== 1 ? 's' : ''}
                       </div>
-                      <p className="font-medium">${order.total.toFixed(2)}</p>
+                      <p className="font-medium">रू {order.total.toFixed(2)}</p>
                     </div>
                   </div>
                 ))}

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/stores/auth-store';
-import { DashboardLayout } from '@/components/layout/dashboard-layout';
+import { AdminLayout } from '@/components/layout/admin-layout';
 import { DashboardContentSkeleton } from '@/components/ui/skeleton-loaders';
 import { 
   Package, 
@@ -168,15 +168,15 @@ export default function AdminDeleteProducts() {
 
   if (!hasHydrated) {
     return (
-      <DashboardLayout title="Delete Products">
+      <AdminLayout title="Delete Products">
         <DashboardContentSkeleton />
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   if (!isAuthenticated || user?.role !== 'admin') {
     return (
-      <DashboardLayout title="Delete Products">
+      <AdminLayout title="Delete Products">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Access Denied
@@ -185,12 +185,12 @@ export default function AdminDeleteProducts() {
             You don't have permission to access this page.
           </p>
         </div>
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   return (
-    <DashboardLayout title="Delete Products">
+    <AdminLayout title="Delete Products">
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -321,7 +321,7 @@ export default function AdminDeleteProducts() {
                     </div>
                     <div className="flex items-center space-x-2">
                       <div className="text-right">
-                        <p className="font-semibold text-lg">${product.price.toFixed(2)}</p>
+                        <p className="font-semibold text-lg">रू {product.price.toFixed(2)}</p>
                         <span className={`inline-block px-2 py-1 text-xs rounded-full ${
                           product.isActive 
                             ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
@@ -369,6 +369,6 @@ export default function AdminDeleteProducts() {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </AdminLayout>
   );
 } 

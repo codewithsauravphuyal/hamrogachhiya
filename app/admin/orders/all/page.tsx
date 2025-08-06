@@ -1,6 +1,9 @@
 "use client";
 
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuthStore } from '@/stores/auth-store';
+import { AdminLayout } from '@/components/layout/admin-layout';
+import { DashboardContentSkeleton } from '@/components/ui/skeleton-loaders';
 import { useRouter } from 'next/navigation';
 
 export default function AdminOrdersAllRedirect() {

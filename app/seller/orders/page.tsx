@@ -285,8 +285,8 @@ export default function SellerOrders() {
                               <p className="text-xs text-gray-600">Qty: {item.quantity}</p>
                             </div>
                             <div className="text-right">
-                              <p className="font-medium text-sm">${item.total.toFixed(2)}</p>
-                              <p className="text-xs text-gray-600">${item.price.toFixed(2)} each</p>
+                                               <p className="font-medium text-sm">रू {item.total.toFixed(2)}</p>
+                 <p className="text-xs text-gray-600">रू {item.price.toFixed(2)} each</p>
                             </div>
                           </div>
                         ))}
@@ -298,11 +298,11 @@ export default function SellerOrders() {
                   <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
                     <div className="flex items-center justify-between">
                       <div className="space-y-1">
-                        <p className="text-sm text-gray-600">Subtotal: ${order.subtotal.toFixed(2)}</p>
-                        {order.tax > 0 && <p className="text-sm text-gray-600">Tax: ${order.tax.toFixed(2)}</p>}
-                        {order.deliveryFee > 0 && <p className="text-sm text-gray-600">Delivery: ${order.deliveryFee.toFixed(2)}</p>}
-                        {order.discount > 0 && <p className="text-sm text-gray-600">Discount: -${order.discount.toFixed(2)}</p>}
-                        <p className="text-lg font-bold text-gray-900 dark:text-white">Total: ${order.total.toFixed(2)}</p>
+                        <p className="text-sm text-gray-600">Subtotal: रू {order.subtotal.toFixed(2)}</p>
+                        {order.tax > 0 && <p className="text-sm text-gray-600">Tax: रू {order.tax.toFixed(2)}</p>}
+                        {order.deliveryFee > 0 && <p className="text-sm text-gray-600">Delivery: रू {order.deliveryFee.toFixed(2)}</p>}
+                        {order.discount > 0 && <p className="text-sm text-gray-600">Discount: -रू {order.discount.toFixed(2)}</p>}
+                        <p className="text-lg font-bold text-gray-900 dark:text-white">Total: रू {order.total.toFixed(2)}</p>
                       </div>
                       <div className="flex items-center space-x-2">
                         <Button size="sm" variant="outline">

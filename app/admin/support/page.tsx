@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/stores/auth-store';
-import { DashboardLayout } from '@/components/layout/dashboard-layout';
+import { AdminLayout } from '@/components/layout/admin-layout';
 import { DashboardContentSkeleton } from '@/components/ui/skeleton-loaders';
 import { 
   Mail, 
@@ -181,15 +181,15 @@ export default function AdminSupport() {
 
   if (!hasHydrated) {
     return (
-      <DashboardLayout title="Support Tickets">
+      <AdminLayout title="Support Tickets">
         <DashboardContentSkeleton />
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   if (!isAuthenticated || user?.role !== 'admin') {
     return (
-      <DashboardLayout title="Support Tickets">
+      <AdminLayout title="Support Tickets">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Access Denied
@@ -198,12 +198,12 @@ export default function AdminSupport() {
             You don't have permission to access this page.
           </p>
         </div>
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   return (
-    <DashboardLayout title="Support Tickets">
+    <AdminLayout title="Support Tickets">
       <div className="space-y-6">
         {/* Header */}
         <div>
@@ -406,6 +406,6 @@ export default function AdminSupport() {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </AdminLayout>
   );
 } 

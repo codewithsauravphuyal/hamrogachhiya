@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/stores/auth-store';
-import { DashboardLayout } from '@/components/layout/dashboard-layout';
+import { AdminLayout } from '@/components/layout/admin-layout';
 import { DashboardContentSkeleton } from '@/components/ui/skeleton-loaders';
 import { 
   FileText, 
@@ -144,15 +144,15 @@ export default function AdminBanners() {
 
   if (!hasHydrated) {
     return (
-      <DashboardLayout title="Manage Banners">
+      <AdminLayout title="Manage Banners">
         <DashboardContentSkeleton />
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   if (!isAuthenticated || user?.role !== 'admin') {
     return (
-      <DashboardLayout title="Manage Banners">
+      <AdminLayout title="Manage Banners">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Access Denied
@@ -161,12 +161,12 @@ export default function AdminBanners() {
             You don't have permission to access this page.
           </p>
         </div>
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   return (
-    <DashboardLayout title="Manage Banners">
+    <AdminLayout title="Manage Banners">
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -316,6 +316,6 @@ export default function AdminBanners() {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </AdminLayout>
   );
 } 

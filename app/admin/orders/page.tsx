@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/stores/auth-store';
-import { DashboardLayout } from '@/components/layout/dashboard-layout';
+import { AdminLayout } from '@/components/layout/admin-layout';
 import { DashboardContentSkeleton } from '@/components/ui/skeleton-loaders';
 import { 
   ShoppingCart, 
@@ -147,15 +147,15 @@ export default function AdminOrders() {
 
   if (!hasHydrated) {
     return (
-      <DashboardLayout title="Manage Orders">
+      <AdminLayout title="Manage Orders">
         <DashboardContentSkeleton />
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   if (!isAuthenticated || user?.role !== 'admin') {
     return (
-      <DashboardLayout title="Manage Orders">
+      <AdminLayout title="Manage Orders">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Access Denied
@@ -164,12 +164,12 @@ export default function AdminOrders() {
             You don't have permission to access this page.
           </p>
         </div>
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   return (
-    <DashboardLayout title="Manage Orders">
+    <AdminLayout title="Manage Orders">
       <div className="space-y-6">
         {/* Header */}
         <div>
@@ -258,7 +258,7 @@ export default function AdminOrders() {
                             <div className="flex-1">
                               <p className="font-medium">{item.product.name}</p>
                               <p className="text-sm text-gray-600">
-                                Qty: {item.quantity} × ${item.product.price.toFixed(2)}
+                                Qty: {item.quantity} × रू {item.product.price.toFixed(2)}
                               </p>
                             </div>
                             <div className="text-right">
@@ -362,6 +362,6 @@ export default function AdminOrders() {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </AdminLayout>
   );
 } 

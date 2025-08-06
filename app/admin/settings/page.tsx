@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/stores/auth-store';
-import { DashboardLayout } from '@/components/layout/dashboard-layout';
+import { AdminLayout } from '@/components/layout/admin-layout';
 import { DashboardContentSkeleton } from '@/components/ui/skeleton-loaders';
 import { 
   Settings, 
@@ -177,15 +177,15 @@ export default function AdminSettings() {
 
   if (!hasHydrated) {
     return (
-      <DashboardLayout title="Platform Settings">
+      <AdminLayout title="Platform Settings">
         <DashboardContentSkeleton />
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   if (!isAuthenticated || user?.role !== 'admin') {
     return (
-      <DashboardLayout title="Platform Settings">
+      <AdminLayout title="Platform Settings">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Access Denied
@@ -194,12 +194,12 @@ export default function AdminSettings() {
             You don't have permission to access this page.
           </p>
         </div>
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   return (
-    <DashboardLayout title="Platform Settings">
+    <AdminLayout title="Platform Settings">
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -536,6 +536,6 @@ export default function AdminSettings() {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </AdminLayout>
   );
 } 

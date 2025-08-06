@@ -7,14 +7,12 @@ import { DashboardContentSkeleton } from '@/components/ui/skeleton-loaders';
 import { 
   Users, 
   Package, 
-  ShoppingCart, 
   Store, 
   TrendingUp, 
-  Plus,
   DollarSign,
-  AlertTriangle,
-  CheckCircle,
-  Clock
+  Star,
+  Eye,
+  Heart
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -24,24 +22,18 @@ import toast from 'react-hot-toast';
 interface DashboardStats {
   totalUsers: number;
   totalProducts: number;
-  totalOrders: number;
   totalStores: number;
   totalRevenue: number;
-  pendingOrders: number;
   activeUsers: number;
   activeProducts: number;
-}
-
-interface RecentOrder {
-  _id: string;
-  orderNumber: string;
-  user: {
-    name: string;
-    email: string;
+  totalViews: number;
+  totalLikes: number;
+  averageRating: number;
+  monthlyGrowth: {
+    users: number;
+    products: number;
+    revenue: number;
   };
-  total: number;
-  status: string;
-  createdAt: string;
 }
 
 interface RecentProduct {
@@ -50,16 +42,31 @@ interface RecentProduct {
   price: number;
   stock: number;
   isActive: boolean;
+  views: number;
+  likes: number;
+  rating: number;
   store: {
     name: string;
+  };
+}
+
+interface RecentActivity {
+  _id: string;
+  type: 'user_registered' | 'product_added' | 'store_approved' | 'order_placed';
+  title: string;
+  description: string;
+  timestamp: string;
+  user?: {
+    name: string;
+    email: string;
   };
 }
 
 export default function AdminDashboard() {
   const { user, isAuthenticated, hasHydrated } = useAuthStore();
   const [stats, setStats] = useState<DashboardStats | null>(null);
-  const [recentOrders, setRecentOrders] = useState<RecentOrder[]>([]);
   const [recentProducts, setRecentProducts] = useState<RecentProduct[]>([]);
+  const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -120,18 +127,6 @@ export default function AdminDashboard() {
       const statsData = await statsResponse.json();
       setStats(statsData.data);
       
-      // Fetch recent orders
-      const ordersResponse = await fetch('/api/admin/orders?limit=5', {
-        headers: { 'Authorization': token ? `Bearer ${token}` : '' }
-      });
-      
-      if (!ordersResponse.ok) {
-        throw new Error('Failed to load orders');
-      }
-      
-      const ordersData = await ordersResponse.json();
-      setRecentOrders(ordersData.data || []);
-      
       // Fetch recent products
       const productsResponse = await fetch('/api/admin/products?limit=5', {
         headers: { 'Authorization': token ? `Bearer ${token}` : '' }
@@ -144,6 +139,18 @@ export default function AdminDashboard() {
       const productsData = await productsResponse.json();
       setRecentProducts(productsData.data || []);
       
+      // Fetch recent activity
+      const activityResponse = await fetch('/api/admin/activity?limit=5', {
+        headers: { 'Authorization': token ? `Bearer ${token}` : '' }
+      });
+      
+      if (!activityResponse.ok) {
+        throw new Error('Failed to load activity');
+      }
+      
+      const activityData = await activityResponse.json();
+      setRecentActivity(activityData.data || []);
+      
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Failed to load dashboard data');
     } finally {
@@ -151,35 +158,31 @@ export default function AdminDashboard() {
     }
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'pending': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
-      case 'confirmed': return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
-      case 'packed': return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
-      case 'shipped': return 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200';
-      case 'delivered': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
-      case 'cancelled': return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
-      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
+  const getActivityIcon = (type: string) => {
+    switch (type) {
+      case 'user_registered': return <Users className="w-4 h-4" />;
+      case 'product_added': return <Package className="w-4 h-4" />;
+      case 'store_approved': return <Store className="w-4 h-4" />;
+      case 'order_placed': return <Package className="w-4 h-4" />;
+      default: return <Package className="w-4 h-4" />;
     }
   };
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'pending': return <Clock className="w-4 h-4" />;
-      case 'confirmed': return <CheckCircle className="w-4 h-4" />;
-      case 'packed': return <Package className="w-4 h-4" />;
-      case 'shipped': return <ShoppingCart className="w-4 h-4" />;
-      case 'delivered': return <CheckCircle className="w-4 h-4" />;
-      case 'cancelled': return <AlertTriangle className="w-4 h-4" />;
-      default: return <Clock className="w-4 h-4" />;
+  const getActivityColor = (type: string) => {
+    switch (type) {
+      case 'user_registered': return 'text-blue-600 bg-blue-100';
+      case 'product_added': return 'text-green-600 bg-green-100';
+      case 'store_approved': return 'text-purple-600 bg-purple-100';
+      case 'order_placed': return 'text-orange-600 bg-orange-100';
+      default: return 'text-gray-600 bg-gray-100';
     }
   };
 
   if (!hasHydrated) {
     return (
-      <DashboardLayout title="Admin Dashboard">
+      <AdminLayout title="Admin Dashboard">
         <DashboardContentSkeleton />
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
@@ -218,7 +221,7 @@ export default function AdminDashboard() {
             Welcome back, {user?.name}!
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            Here's what's happening with your e-commerce platform
+            Here's what's happening with your e-commerce platform today
           </p>
         </div>
 
@@ -232,7 +235,7 @@ export default function AdminDashboard() {
             <CardContent>
               <div className="text-2xl font-bold">{stats?.totalUsers || 0}</div>
               <p className="text-xs text-muted-foreground">
-                {stats?.activeUsers || 0} active users
+                {stats?.activeUsers || 0} active • +{stats?.monthlyGrowth?.users || 0} this month
               </p>
             </CardContent>
           </Card>
@@ -245,52 +248,69 @@ export default function AdminDashboard() {
             <CardContent>
               <div className="text-2xl font-bold">{stats?.totalProducts || 0}</div>
               <p className="text-xs text-muted-foreground">
-                {stats?.activeProducts || 0} active products
+                {stats?.activeProducts || 0} active • +{stats?.monthlyGrowth?.products || 0} this month
+              </p>
+            </CardContent>
+          </Card>
+
+                     <Card>
+             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+               <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+               <DollarSign className="h-4 w-4 text-muted-foreground" />
+             </CardHeader>
+             <CardContent>
+               <div className="text-2xl font-bold">रू {stats?.totalRevenue?.toFixed(2) || '0.00'}</div>
+               <p className="text-xs text-muted-foreground">
+                 +{stats?.monthlyGrowth?.revenue || 0}% this month
+               </p>
+             </CardContent>
+           </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Platform Activity</CardTitle>
+              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stats?.totalViews || 0}</div>
+              <p className="text-xs text-muted-foreground">
+                {stats?.totalLikes || 0} likes • {stats?.averageRating?.toFixed(1) || '0.0'} avg rating
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Additional Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Stores</CardTitle>
+              <Store className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stats?.totalStores || 0}</div>
+              <p className="text-xs text-muted-foreground">
+                Active stores on platform
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
-              <ShoppingCart className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium">Average Rating</CardTitle>
+              <Star className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats?.totalOrders || 0}</div>
+              <div className="text-2xl font-bold">{stats?.averageRating?.toFixed(1) || '0.0'}</div>
               <p className="text-xs text-muted-foreground">
-                {stats?.pendingOrders || 0} pending orders
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-              <DollarSign className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">${stats?.totalRevenue?.toFixed(2) || '0.00'}</div>
-              <p className="text-xs text-muted-foreground">
-                All time sales
+                Customer satisfaction
               </p>
             </CardContent>
           </Card>
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <Link href="/admin/products/add">
-            <Button className="w-full" variant="outline">
-              <Plus className="w-4 h-4 mr-2" />
-              Add Product
-            </Button>
-          </Link>
-          <Link href="/admin/orders/manage">
-            <Button className="w-full" variant="outline">
-              <ShoppingCart className="w-4 h-4 mr-2" />
-              Manage Orders
-            </Button>
-          </Link>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           <Link href="/admin/users/manage">
             <Button className="w-full" variant="outline">
               <Users className="w-4 h-4 mr-2" />
@@ -305,13 +325,13 @@ export default function AdminDashboard() {
           </Link>
         </div>
 
-        {/* Recent Orders and Products */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Recent Activity */}
+        <div className="grid grid-cols-1 gap-8">
           <Card>
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle>Recent Orders</CardTitle>
-                <Link href="/admin/orders">
+                <CardTitle>Recent Activity</CardTitle>
+                <Link href="/admin/activity">
                   <Button variant="outline" size="sm">
                     View All
                   </Button>
@@ -320,64 +340,22 @@ export default function AdminDashboard() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {recentOrders.map((order) => (
-                  <div key={order._id} className="flex items-center justify-between p-3 border rounded-lg">
-                    <div>
-                      <p className="font-medium">{order.orderNumber}</p>
-                      <p className="text-sm text-gray-600">{order.user.name}</p>
-                      <p className="text-xs text-gray-500">{order.user.email}</p>
+                {recentActivity.map((activity) => (
+                  <div key={activity._id} className="flex items-start space-x-3 p-3 border rounded-lg">
+                    <div className={`p-2 rounded-full ${getActivityColor(activity.type)}`}>
+                      {getActivityIcon(activity.type)}
                     </div>
-                    <div className="text-right">
-                      <p className="font-medium">${order.total.toFixed(2)}</p>
-                      <div className="flex items-center space-x-1 mt-1">
-                        {getStatusIcon(order.status)}
-                        <span className={`inline-block px-2 py-1 text-xs rounded-full ${getStatusColor(order.status)}`}>
-                          {order.status}
-                        </span>
-                      </div>
+                    <div className="flex-1">
+                      <p className="font-medium text-sm">{activity.title}</p>
+                      <p className="text-xs text-gray-600 mb-1">{activity.description}</p>
+                      <p className="text-xs text-gray-500">
+                        {new Date(activity.timestamp).toLocaleDateString()}
+                      </p>
                     </div>
                   </div>
                 ))}
-                {recentOrders.length === 0 && (
-                  <p className="text-center text-gray-500 py-4">No recent orders</p>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle>Recent Products</CardTitle>
-                <Link href="/admin/products/add">
-                  <Button variant="outline" size="sm">
-                    <Plus className="w-4 h-4 mr-1" />
-                    Add Product
-                  </Button>
-                </Link>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {recentProducts.map((product) => (
-                  <div key={product._id} className="flex items-center justify-between p-3 border rounded-lg">
-                    <div>
-                      <p className="font-medium">{product.name}</p>
-                      <p className="text-sm text-gray-600">{product.store.name}</p>
-                      <p className="text-xs text-gray-500">Stock: {product.stock}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-medium">${product.price.toFixed(2)}</p>
-                      <span className={`inline-block px-2 py-1 text-xs rounded-full ${
-                        product.isActive ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-                      }`}>
-                        {product.isActive ? 'Active' : 'Inactive'}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-                {recentProducts.length === 0 && (
-                  <p className="text-center text-gray-500 py-4">No recent products</p>
+                {recentActivity.length === 0 && (
+                  <p className="text-center text-gray-500 py-4">No recent activity</p>
                 )}
               </div>
             </CardContent>

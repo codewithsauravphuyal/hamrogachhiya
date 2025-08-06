@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { 
   BarChart3,
-  ShoppingCart,
   Users,
   Store,
   CreditCard,
@@ -46,7 +45,7 @@ interface NavItem {
 export function AdminSidebar() {
   const { user, logout } = useAuthStore();
   const pathname = usePathname();
-  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set(['dashboard', 'orders', 'users', 'stores', 'payments', 'content', 'support', 'settings']));
+  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set(['dashboard', 'users', 'stores', 'payments', 'content', 'support', 'settings']));
 
   // Check if user is admin
   if (user?.role !== 'admin') {
@@ -79,15 +78,6 @@ export function AdminSidebar() {
       ]
     },
     {
-      title: 'Orders',
-      icon: ShoppingCart,
-      items: [
-        { label: 'All Orders', href: '/admin/orders/all', icon: List, description: 'View all platform orders' },
-        { label: 'Manage Orders', href: '/admin/orders/manage', icon: Edit, description: 'Manage order status and details' },
-        { label: 'Order Issues', href: '/admin/orders/issues', icon: AlertTriangle, description: 'Handle order problems and disputes' }
-      ]
-    },
-    {
       title: 'Users',
       icon: Users,
       items: [
@@ -102,7 +92,6 @@ export function AdminSidebar() {
       icon: Store,
       items: [
         { label: 'All Stores', href: '/admin/stores', icon: List, description: 'View all registered stores' },
-        { label: 'Manage Stores', href: '/admin/stores/manage', icon: Edit, description: 'Manage store settings and status' },
         { label: 'Approve Sellers', href: '/admin/sellers/approve', icon: Shield, description: 'Approve new seller applications' },
         { label: 'Flagged Stores', href: '/admin/stores/flagged', icon: AlertTriangle, description: 'Review flagged store accounts' }
       ]
@@ -143,23 +132,6 @@ export function AdminSidebar() {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Admin User Info */}
-      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-orange-600 rounded-full flex items-center justify-center">
-            <Users className="w-5 h-5 text-white" />
-          </div>
-          <div className="flex-1">
-            <p className="text-sm font-medium text-gray-900 dark:text-white">
-              {user?.name || 'Admin'}
-            </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              Platform Administrator
-            </p>
-          </div>
-        </div>
-      </div>
-
       {/* Navigation Groups */}
       <div className="flex-1 overflow-y-auto p-4 space-y-2">
         {navGroups.map((group) => {

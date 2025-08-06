@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/stores/auth-store';
-import { DashboardLayout } from '@/components/layout/dashboard-layout';
+import { AdminLayout } from '@/components/layout/admin-layout';
 import { DashboardContentSkeleton } from '@/components/ui/skeleton-loaders';
 import { 
   Package, 
@@ -112,15 +112,15 @@ export default function AdminReportedProducts() {
 
   if (!hasHydrated) {
     return (
-      <DashboardLayout title="Reported Products">
+      <AdminLayout title="Reported Products">
         <DashboardContentSkeleton />
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   if (!isAuthenticated || user?.role !== 'admin') {
     return (
-      <DashboardLayout title="Reported Products">
+      <AdminLayout title="Reported Products">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Access Denied
@@ -129,12 +129,12 @@ export default function AdminReportedProducts() {
             You don't have permission to access this page.
           </p>
         </div>
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   return (
-    <DashboardLayout title="Reported Products">
+    <AdminLayout title="Reported Products">
       <div className="space-y-6">
         {/* Header */}
         <div>
@@ -226,7 +226,7 @@ export default function AdminReportedProducts() {
                           {product.store.name}
                         </div>
                         <div className="flex items-center space-x-4 mt-2">
-                          <span className="font-medium">${product.price.toFixed(2)}</span>
+                          <span className="font-medium">रू {product.price.toFixed(2)}</span>
                           <span className="text-sm text-gray-500">Stock: {product.stock}</span>
                         </div>
                       </div>
@@ -301,6 +301,6 @@ export default function AdminReportedProducts() {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </AdminLayout>
   );
 } 

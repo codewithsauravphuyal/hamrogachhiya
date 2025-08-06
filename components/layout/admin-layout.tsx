@@ -102,12 +102,11 @@ export function AdminLayout({
           {/* Sidebar Header */}
           <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
             <Link href="/admin" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center">
-                <Users className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-lg font-bold text-gray-900 dark:text-white">
-                Admin Panel
-              </span>
+              <img
+                src="/logo.png"
+                alt="Hamro Gachhiya Logo"
+                className="w-full h-20 object-contain"
+              />
             </Link>
             <Button
               variant="ghost"

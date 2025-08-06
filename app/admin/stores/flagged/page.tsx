@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/stores/auth-store';
-import { DashboardLayout } from '@/components/layout/dashboard-layout';
+import { AdminLayout } from '@/components/layout/admin-layout';
 import { DashboardContentSkeleton } from '@/components/ui/skeleton-loaders';
 import { 
   Store, 
@@ -110,15 +110,15 @@ export default function AdminFlaggedStores() {
 
   if (!hasHydrated) {
     return (
-      <DashboardLayout title="Flagged Stores">
+      <AdminLayout title="Flagged Stores">
         <DashboardContentSkeleton />
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   if (!isAuthenticated || user?.role !== 'admin') {
     return (
-      <DashboardLayout title="Flagged Stores">
+      <AdminLayout title="Flagged Stores">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Access Denied
@@ -127,12 +127,12 @@ export default function AdminFlaggedStores() {
             You don't have permission to access this page.
           </p>
         </div>
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   return (
-    <DashboardLayout title="Flagged Stores">
+    <AdminLayout title="Flagged Stores">
       <div className="space-y-6">
         {/* Header */}
         <div>
@@ -282,6 +282,6 @@ export default function AdminFlaggedStores() {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </AdminLayout>
   );
 } 

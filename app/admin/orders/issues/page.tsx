@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/stores/auth-store';
-import { DashboardLayout } from '@/components/layout/dashboard-layout';
+import { AdminLayout } from '@/components/layout/admin-layout';
 import { DashboardContentSkeleton } from '@/components/ui/skeleton-loaders';
 import { 
   ShoppingCart, 
@@ -172,15 +172,15 @@ export default function AdminOrderIssues() {
 
   if (!hasHydrated) {
     return (
-      <DashboardLayout title="Order Issues">
+      <AdminLayout title="Order Issues">
         <DashboardContentSkeleton />
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   if (!isAuthenticated || user?.role !== 'admin') {
     return (
-      <DashboardLayout title="Order Issues">
+      <AdminLayout title="Order Issues">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Access Denied
@@ -189,12 +189,12 @@ export default function AdminOrderIssues() {
             You don't have permission to access this page.
           </p>
         </div>
-      </DashboardLayout>
+      </AdminLayout>
     );
   }
 
   return (
-    <DashboardLayout title="Order Issues">
+    <AdminLayout title="Order Issues">
       <div className="space-y-6">
         {/* Header */}
         <div>
@@ -303,7 +303,7 @@ export default function AdminOrderIssues() {
                         {issue.order.items.map((item, index) => (
                           <div key={index} className="flex justify-between text-sm">
                             <span>{item.product.name} (x{item.quantity})</span>
-                            <span>${(item.product.price * item.quantity).toFixed(2)}</span>
+                            <span>रू {(item.product.price * item.quantity).toFixed(2)}</span>
                           </div>
                         ))}
                         <div className="border-t pt-2 flex justify-between font-medium">
@@ -362,6 +362,6 @@ export default function AdminOrderIssues() {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </AdminLayout>
   );
 } 
