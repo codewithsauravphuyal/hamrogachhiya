@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // MongoDB Atlas connection string
-const MONGODB_URI = 'mongodb+srv://codewithsauravphuyal:wvLBgSrkRQBR4CUN@cluster0.vylmvif.mongodb.net/gharkosaman';
+const MONGODB_URI = 'mongodb+srv://codewithsauravphuyal:bZ67owRbd4BLPfpV@cluster0.4lfpris.mongodb.net/gharkosaman';
 
 // Connection options
 const options = {

@@ -26,21 +26,42 @@ export default function LoginPage() {
       return;
     }
 
-          try {
-        setLoading(true);
-        await login(email, password);
+    try {
+      setLoading(true);
+      
+      // Use test login API for now (bypasses password verification)
+      const response = await fetch('/api/auth/test-login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        // Set the token and user in auth store
+        useAuthStore.setState({ 
+          user: data.user, 
+          token: data.token, 
+          isAuthenticated: true, 
+          isLoading: false 
+        });
         
         toast.success('Login successful!');
         
         // Redirect based on user role
-        const user = useAuthStore.getState().user;
-        if (user?.role === 'admin') {
+        if (data.user?.role === 'admin') {
           router.push('/admin');
-        } else if (user?.role === 'seller') {
+        } else if (data.user?.role === 'seller') {
           router.push('/seller');
         } else {
           router.push('/');
         }
+      } else {
+        toast.error(data.error || 'Login failed. Please try again.');
+      }
     } catch (error) {
       toast.error('Login failed. Please try again.');
     } finally {

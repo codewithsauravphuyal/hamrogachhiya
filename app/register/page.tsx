@@ -47,39 +47,45 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Call the real registration API
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          phone: formData.phone,
+          role: formData.role
+        }),
+      });
       
-      // Mock user data
-      const user = {
-        id: '1',
-        name: formData.name,
-        email: formData.email,
-        role: formData.role,
-        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80',
-        phone: formData.phone,
-        addresses: [],
-        createdAt: new Date().toISOString()
-      };
-
-      // Generate a proper JWT token (for development)
-      const token = btoa(JSON.stringify({ userId: user.id, email: user.email, role: user.role }));
+      const data = await response.json();
       
-      // Set user directly in localStorage and state
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+      if (!response.ok) {
+        throw new Error(data.error || 'Registration failed');
+      }
       
-      // Update auth store
+      // Update auth store with real user data
       useAuthStore.setState({ 
-        user, 
-        token, 
+        user: data.user, 
+        token: data.token, 
         isAuthenticated: true, 
         isLoading: false 
       });
+      
       toast.success('Registration successful!');
-      // No automatic redirect - let user decide where to go
+      
+      // Redirect based on role
+      if (data.user.role === 'seller') {
+        router.push('/seller');
+      } else {
+        router.push('/');
+      }
     } catch (error) {
-      toast.error('Registration failed. Please try again.');
+      toast.error(error.message || 'Registration failed. Please try again.');
     } finally {
       setIsLoading(false);
     }

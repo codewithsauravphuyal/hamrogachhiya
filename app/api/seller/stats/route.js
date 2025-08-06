@@ -27,6 +27,10 @@ export async function GET(request) {
       return NextResponse.json({ error: 'No store found for seller' }, { status: 404 });
     }
     
+    // Get products for this store
+    const storeProducts = await Product.find({ store: store._id }).select('_id');
+    const productIds = storeProducts.map(p => p._id);
+    
     const [
       totalProducts,
       totalOrders,
@@ -36,14 +40,14 @@ export async function GET(request) {
       rating
     ] = await Promise.all([
       Product.countDocuments({ store: store._id, isActive: true }),
-      Order.countDocuments({ 'items.storeId': store._id }),
+      Order.countDocuments({ 'items.product': { $in: productIds } }),
       Order.aggregate([
-        { $match: { 'items.storeId': store._id, status: { $in: ['delivered', 'shipped'] } } },
+        { $match: { 'items.product': { $in: productIds }, status: { $in: ['delivered', 'shipped'] } } },
         { $unwind: '$items' },
-        { $match: { 'items.storeId': store._id } },
-        { $group: { _id: null, total: { $sum: '$items.price' } } }
+        { $match: { 'items.product': { $in: productIds } } },
+        { $group: { _id: null, total: { $sum: '$items.total' } } }
       ]),
-      Order.countDocuments({ 'items.storeId': store._id, status: 'pending' }),
+      Order.countDocuments({ 'items.product': { $in: productIds }, status: 'pending' }),
       Product.countDocuments({ store: store._id, stock: { $lte: 5 } }),
       store.rating || 0
     ]);

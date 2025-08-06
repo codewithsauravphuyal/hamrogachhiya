@@ -6,7 +6,7 @@ export async function GET() {
     console.log('🔍 Testing database connection...');
     
     // Test connection without models
-    const MONGODB_URI = 'mongodb+srv://codewithsauravphuyal:wvLBgSrkRQBR4CUN@cluster0.vylmvif.mongodb.net/gharkosaman';
+    const MONGODB_URI = 'mongodb+srv://codewithsauravphuyal:bZ67owRbd4BLPfpV@cluster0.4lfpris.mongodb.net/gharkosaman';
     
     const options = {
       maxPoolSize: 10,

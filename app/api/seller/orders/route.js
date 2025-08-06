@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/database/connection';
-import { User, Order, Store } from '@/database/mongoose-schema';
+import { User, Order, Store, Product } from '@/database/mongoose-schema';
 import { verifyToken } from '@/lib/auth';
 
 export async function GET(request) {
@@ -24,12 +24,20 @@ export async function GET(request) {
     if (!store) {
       return NextResponse.json({ error: 'No store found for seller' }, { status: 404 });
     }
+    
+    // Get products for this store
+    const storeProducts = await Product.find({ store: store._id }).select('_id');
+    const productIds = storeProducts.map(p => p._id);
+    
+    const { searchParams } = new URL(request.url);
+    const limit = parseInt(searchParams.get('limit')) || 10;
+    
     // Get orders for this store
-    const orders = await Order.find({ 'items.storeId': store._id })
+    const orders = await Order.find({ 'items.product': { $in: productIds } })
       .populate('user', 'name email')
       .populate('items.product', 'name images price')
       .sort({ createdAt: -1 })
-      .limit(10)
+      .limit(limit)
       .lean();
     return NextResponse.json({ success: true, data: orders });
   } catch (error) {

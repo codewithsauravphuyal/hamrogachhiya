@@ -2,6 +2,7 @@
 
 import { useAuthStore } from '@/stores/auth-store';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { 
   Home, 
   ShoppingCart, 
@@ -24,7 +25,16 @@ import {
   Shield,
   AlertTriangle,
   FileText,
-  Mail
+  Mail,
+  Edit,
+  Trash2,
+  Eye,
+  CheckCircle,
+  XCircle,
+  TrendingUp,
+  DollarSign,
+  Calendar,
+  Star
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -37,6 +47,7 @@ interface NavItem {
 
 export function RoleBasedNavigation() {
   const { user, isAuthenticated, logout } = useAuthStore();
+  const pathname = usePathname();
 
   // Customer Navigation
   const customerNav: NavItem[] = [
@@ -64,29 +75,37 @@ export function RoleBasedNavigation() {
     { label: 'Store Settings', href: '/seller/settings', icon: Settings },
   ];
 
-  // Admin Navigation
+  // Admin Navigation - Comprehensive management
   const adminNav: NavItem[] = [
     { label: 'Dashboard', href: '/admin', icon: BarChart3 },
-    { label: 'Users', href: '/admin/users', icon: Users },
-    { label: 'View All Users', href: '/admin/users/all', icon: Users },
-    { label: 'Sellers', href: '/admin/sellers', icon: Store },
-    { label: 'Customers', href: '/admin/customers', icon: User },
-    { label: 'Stores', href: '/admin/stores', icon: Store },
-    { label: 'Approve Sellers', href: '/admin/sellers/approve', icon: Shield },
-    { label: 'Flagged Stores', href: '/admin/stores/flagged', icon: AlertTriangle },
     { label: 'Products', href: '/admin/products', icon: Package },
-    { label: 'All Products', href: '/admin/products/all', icon: Package },
+    { label: 'Add Product', href: '/admin/products/add', icon: Plus },
+    { label: 'All Products', href: '/admin/products/all', icon: List },
+    { label: 'Edit Products', href: '/admin/products/edit', icon: Edit },
+    { label: 'Delete Products', href: '/admin/products/delete', icon: Trash2 },
     { label: 'Reported Products', href: '/admin/products/reported', icon: AlertTriangle },
     { label: 'Orders', href: '/admin/orders', icon: ShoppingCart },
-    { label: 'All Orders', href: '/admin/orders/all', icon: ShoppingCart },
+    { label: 'All Orders', href: '/admin/orders/all', icon: List },
+    { label: 'Manage Orders', href: '/admin/orders/manage', icon: Edit },
     { label: 'Order Issues', href: '/admin/orders/issues', icon: AlertTriangle },
+    { label: 'Users', href: '/admin/users', icon: Users },
+    { label: 'All Users', href: '/admin/users/all', icon: List },
+    { label: 'Customers', href: '/admin/users/customers', icon: User },
+    { label: 'Sellers', href: '/admin/users/sellers', icon: Store },
+    { label: 'Manage Users', href: '/admin/users/manage', icon: Edit },
+    { label: 'Stores', href: '/admin/stores', icon: Store },
+    { label: 'All Stores', href: '/admin/stores/all', icon: List },
+    { label: 'Manage Stores', href: '/admin/stores/manage', icon: Edit },
+    { label: 'Approve Sellers', href: '/admin/sellers/approve', icon: Shield },
+    { label: 'Flagged Stores', href: '/admin/stores/flagged', icon: AlertTriangle },
     { label: 'Payments', href: '/admin/payments', icon: CreditCard },
-    { label: 'Transactions', href: '/admin/payments/transactions', icon: CreditCard },
-    { label: 'Platform Earnings', href: '/admin/payments/earnings', icon: CreditCard },
+    { label: 'Transactions', href: '/admin/payments/transactions', icon: DollarSign },
+    { label: 'Platform Earnings', href: '/admin/payments/earnings', icon: TrendingUp },
     { label: 'Banners', href: '/admin/banners', icon: FileText },
     { label: 'Blogs', href: '/admin/blogs', icon: FileText },
-    { label: 'Platform Settings', href: '/admin/settings', icon: Settings },
+    { label: 'Reviews', href: '/admin/reviews', icon: Star },
     { label: 'Support Tickets', href: '/admin/support', icon: Mail },
+    { label: 'Platform Settings', href: '/admin/settings', icon: Settings },
   ];
 
   // Public Navigation
@@ -114,15 +133,27 @@ export function RoleBasedNavigation() {
 
   const navItems = getNavigationItems();
 
+  const isActiveLink = (href: string) => {
+    if (href === '/') {
+      return pathname === '/';
+    }
+    return pathname.startsWith(href);
+  };
+
   return (
     <nav className="space-y-2">
       {navItems.map((item) => {
         const Icon = item.icon;
+        const isActive = isActiveLink(item.href);
         return (
           <Link
             key={item.href}
             href={item.href}
-            className="flex items-center space-x-3 px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-orange-600 dark:hover:text-orange-400 rounded-lg transition-colors"
+            className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
+              isActive
+                ? 'bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300 border-r-2 border-orange-500'
+                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-orange-600 dark:hover:text-orange-400'
+            }`}
           >
             <Icon className="w-5 h-5" />
             <span className="flex-1">{item.label}</span>

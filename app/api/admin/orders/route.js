@@ -24,9 +24,13 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const limit = parseInt(searchParams.get('limit')) || 10;
     
-    // Get recent orders
+    // Get recent orders with user info and populated items
     const orders = await Order.find()
       .populate('user', 'name email')
+      .populate({
+        path: 'items.product',
+        select: 'name price images'
+      })
       .sort({ createdAt: -1 })
       .limit(limit)
       .lean();
@@ -79,9 +83,13 @@ export async function PUT(request) {
 
     const order = await Order.findByIdAndUpdate(
       orderId,
-      { status },
+      { status, updatedAt: new Date() },
       { new: true }
-    ).populate('user', 'name email');
+    ).populate('user', 'name email')
+     .populate({
+       path: 'items.product',
+       select: 'name price images'
+     });
 
     if (!order) {
       return NextResponse.json(

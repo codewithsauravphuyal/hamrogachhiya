@@ -75,7 +75,7 @@ export const useAuthStore = create<AuthStore>()(
         }
       },
       setToken: (token: string) => {
-        set({ token });
+        set({ token, isAuthenticated: true });
       }
     }),
     {

@@ -1,246 +1,160 @@
-# Hamro Gachhiya - Quick Commerce Platform
+# Blinkit E-commerce Platform
 
-A modern, responsive quick commerce platform built with Next.js 14, TypeScript, and Tailwind CSS. Inspired by platforms like Blinkit and Zepto, this provides a complete quick commerce solution with support for multiple user roles, store management, and lightning-fast delivery features.
+A modern e-commerce platform built with Next.js, featuring admin and seller dashboards with comprehensive management capabilities.
 
-## 🚀 Features
+## Features
 
-### 🔐 Authentication & User Management
-- **User Registration & Login**: Email/password authentication with social login UI
-- **Role-based Access**: Support for customers, sellers, and admin roles
-- **Profile Management**: User profile updates and address management
+### Admin Dashboard (`/admin`)
+- **Dashboard Overview**: View platform statistics, recent orders, and products
+- **User Management**: Manage all users (admin, seller, customer)
+- **Store Management**: Oversee all stores and their status
+- **Product Management**: Monitor all products across the platform
+- **Order Management**: Track all orders and their status
 
-### 🏬 Quick Commerce Features
-- **Home Page**: Hero banners, product categories, featured stores and products
-- **Store Listing**: Browse all local stores with ratings and reviews
-- **Store Details**: Individual store pages with product catalogs
-- **Product Details**: Comprehensive product pages with images, variants, and reviews
-- **Lightning-fast Delivery**: Quick commerce focused on fast delivery
+### Seller Dashboard (`/seller`)
+- **Dashboard Overview**: View store statistics, recent orders, and low stock alerts
+- **Product Management**: Add, edit, and manage your products
+- **Order Management**: Process and fulfill customer orders
+- **Store Settings**: Configure store preferences and settings
 
-### 🛒 Shopping Cart & Checkout
-- **Cart Management**: Add, remove, and update quantities
-- **Checkout Process**: Multi-step checkout with address and payment
-- **Payment Methods**: Support for COD, Khalti, eSewa, and card payments
-- **Order Summary**: Real-time order calculations and summaries
-- **Quick Checkout**: Streamlined process for fast ordering
-
-### 📦 Order Management
-- **Order Tracking**: Track orders from pending to delivered
-- **Order History**: Complete order history for users
-- **Status Updates**: Real-time order status notifications
-- **Fast Delivery**: Quick commerce delivery tracking
-
-### 🧑‍💼 Seller Dashboard
-- **Dashboard Overview**: Sales analytics, order management, and inventory
-- **Product Management**: Add, edit, and delete products
-- **Inventory Control**: Stock management and low stock alerts
-- **Order Processing**: Manage and update order statuses
-- **Quick Commerce Tools**: Tools optimized for fast order fulfillment
-
-### 🧑‍💻 Admin Panel
-- **User Management**: Manage customers and sellers
-- **Store Approval**: Approve new seller applications
-- **Content Management**: Create and manage promotional banners
-- **Analytics**: Platform-wide analytics and reporting
-
-### 🌐 General Features
-- **Responsive Design**: Mobile-first responsive design
-- **Dark Mode**: Toggle between light and dark themes
-- **Search & Filter**: Advanced product search and filtering
-- **Performance**: Optimized for fast loading and smooth interactions
-- **Mobile-First**: Optimized for mobile quick commerce experience
-
-## 🛠️ Tech Stack
-
-- **Framework**: Next.js 14 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS + ShadCN/UI
-- **State Management**: Zustand
-- **Icons**: Lucide React
-- **Forms**: React Hook Form + Zod
-- **Notifications**: React Hot Toast
-- **Theme**: Next Themes
-
-## 📁 Project Structure
-
-```
-hamrogachhiya/
-├── app/                          # Next.js App Router
-│   ├── globals.css              # Global styles
-│   ├── layout.tsx               # Root layout
-│   ├── page.tsx                 # Home page
-│   ├── login/                   # Authentication pages
-│   ├── register/
-│   ├── cart/                    # Shopping cart
-│   ├── checkout/                # Checkout process
-│   ├── products/                # Product pages
-│   ├── stores/                  # Store pages
-│   ├── orders/                  # Order management
-│   └── dashboard/               # Seller/Admin dashboards
-├── components/                   # Reusable components
-│   ├── ui/                      # Base UI components
-│   ├── layout/                  # Layout components
-│   ├── home/                    # Home page components
-│   └── dashboard/               # Dashboard components
-├── stores/                      # Zustand state stores
-│   ├── auth-store.ts           # Authentication state
-│   └── cart-store.ts           # Shopping cart state
-├── types/                       # TypeScript type definitions
-├── lib/                         # Utility functions
-└── public/                      # Static assets
-```
-
-## 🚀 Getting Started
+## Quick Start
 
 ### Prerequisites
 - Node.js 18+ 
-- npm or yarn
+- MongoDB Atlas account
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd hamrogachhiya
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-
-3. **Run the development server**
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
-
-4. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
-### Environment Variables
-
-Create a `.env.local` file in the root directory:
-
-```env
-# API Configuration
-NEXT_PUBLIC_API_URL=http://localhost:8000/api
-
-# Authentication
-NEXTAUTH_SECRET=your-secret-key
-NEXTAUTH_URL=http://localhost:3000
-
-# Payment Gateways
-KHALTI_PUBLIC_KEY=your-khalti-key
-ESEWA_MERCHANT_ID=your-esewa-id
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd blinkit
 ```
 
-## 📱 Features Overview
+2. Install dependencies:
+```bash
+npm install
+```
 
-### Customer Features
-- Browse products and local stores
-- Add items to cart
-- Complete quick checkout process
-- Track order status with fast delivery
-- Manage profile and addresses
-- View order history
-- Lightning-fast delivery experience
+3. Initialize the database with sample data:
+```bash
+npm run db:init
+```
 
-### Seller Features
-- Product catalog management
-- Quick order processing
-- Sales analytics
-- Inventory management
-- Store profile customization
-- Fast fulfillment tools
+4. Start the development server:
+```bash
+npm run dev
+```
 
-### Admin Features
-- User and seller management
-- Store approval system
-- Content management
-- Platform analytics
-- System configuration
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## 🎨 Design System
+## Testing the Dashboards
 
-The platform uses a comprehensive design system built with Tailwind CSS:
+### Admin Dashboard
+1. Navigate to [http://localhost:3000/admin](http://localhost:3000/admin)
+2. Login with admin credentials:
+   - **Email**: `admin@admin.com`
+   - **Password**: `admin123`
+3. Explore the admin features:
+   - View platform statistics
+   - Manage users at `/admin/users`
+   - Manage stores at `/admin/stores`
+   - Monitor products and orders
 
-- **Colors**: Brand colors with dark mode support
-- **Typography**: Consistent font hierarchy
-- **Components**: Reusable UI components
-- **Spacing**: Consistent spacing scale
-- **Responsive**: Mobile-first responsive design
+### Seller Dashboard
+1. Navigate to [http://localhost:3000/seller](http://localhost:3000/seller)
+2. Login with seller credentials:
+   - **Email**: `raju@admin.com`
+   - **Password**: `seller123`
+3. Explore the seller features:
+   - View store statistics and low stock alerts
+   - Manage products at `/seller/products`
+   - Process orders at `/seller/orders`
 
-## 🔧 Customization
+### Customer Account
+- **Email**: `saurav@admin.com`
+- **Password**: `customer123`
 
-### Adding New Components
-1. Create component in `components/ui/`
-2. Export from `components/ui/index.ts`
-3. Use throughout the application
+## API Endpoints
 
-### Styling Modifications
-- Modify `tailwind.config.js` for theme changes
-- Update `app/globals.css` for global styles
-- Use CSS variables for consistent theming
+### Admin APIs
+- `GET /api/admin/stats` - Get platform statistics
+- `GET /api/admin/users` - Get all users
+- `GET /api/admin/stores` - Get all stores
+- `GET /api/admin/orders` - Get all orders
+- `GET /api/admin/products` - Get all products
 
-### State Management
-- Add new stores in `stores/` directory
-- Use Zustand for client-side state
-- Implement server-side state as needed
+### Seller APIs
+- `GET /api/seller/stats` - Get seller statistics
+- `GET /api/seller/products` - Get seller's products
+- `GET /api/seller/orders` - Get seller's orders
 
-## 🚀 Deployment
+### Authentication
+- `POST /api/auth/login` - User login
+- `POST /api/auth/test-login` - Test login (skips password verification)
 
-### Vercel (Recommended)
-1. Push code to GitHub
-2. Connect repository to Vercel
-3. Deploy automatically
+## Database Schema
 
-### Other Platforms
-- Build: `npm run build`
-- Start: `npm start`
-- Environment variables required
+The application uses MongoDB with the following main collections:
+- **Users**: Admin, seller, and customer accounts
+- **Stores**: Seller store information
+- **Products**: Product catalog with variants
+- **Orders**: Customer orders with items
+- **Categories**: Product categories
+- **Payments**: Payment transactions
 
-## 🤝 Contributing
+## Tech Stack
+
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Styling**: Tailwind CSS, shadcn/ui components
+- **State Management**: Zustand
+- **Database**: MongoDB with Mongoose
+- **Authentication**: JWT tokens
+- **UI Components**: Lucide React icons
+
+## Project Structure
+
+```
+blinkit/
+├── app/                    # Next.js app directory
+│   ├── admin/             # Admin dashboard pages
+│   ├── seller/            # Seller dashboard pages
+│   ├── api/               # API routes
+│   └── ...                # Other pages
+├── components/            # React components
+│   ├── layout/           # Layout components
+│   ├── ui/               # UI components
+│   └── ...               # Other components
+├── database/             # Database configuration
+├── stores/               # Zustand stores
+├── types/                # TypeScript types
+└── ...
+```
+
+## Development
+
+### Available Scripts
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run db:init` - Initialize database with sample data
+- `npm run db:connect` - Test database connection
+
+### Environment Variables
+Create a `.env.local` file with:
+```
+JWT_SECRET=your-secret-key-here
+MONGODB_URI=your-mongodb-connection-string
+```
+
+## Contributing
 
 1. Fork the repository
-2. Create feature branch
-3. Make changes
-4. Add tests
-5. Submit pull request
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
-## 📄 License
+## License
 
-This project is licensed under the MIT License.
-
-## 🆘 Support
-
-For support and questions:
-- Create an issue on GitHub
-- Check documentation
-- Review existing issues
-
-## 🔮 Future Enhancements
-
-- [ ] Real-time chat support
-- [ ] Advanced analytics dashboard
-- [ ] Mobile app development
-- [ ] AI-powered recommendations
-- [ ] Multi-language support
-- [ ] Advanced payment integrations
-- [ ] Push notifications
-- [ ] Blog system
-- [ ] Review and rating system
-- [ ] Location-based filtering
-- [ ] Delivery tracking integration
-- [ ] Quick commerce optimization
-- [ ] Local store partnerships
-
----
-
-Built with ❤️ using Next.js, TypeScript, and Tailwind CSS
-
----
-
-**Hamro Gachhiya** - Your one-stop destination for quick commerce. Order groceries, electronics, and more with lightning-fast delivery. 
+This project is licensed under the MIT License. 
