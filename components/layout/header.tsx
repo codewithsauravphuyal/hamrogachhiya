@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useAuthStore } from '@/stores/auth-store';
 import { useCartStore } from '@/stores/cart-store';
+import { useWishlistStore } from '@/stores/wishlist-store';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -22,6 +23,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, isAuthenticated, logout } = useAuthStore();
   const { itemCount } = useCartStore();
+  const { itemCount: wishlistCount } = useWishlistStore();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -71,7 +73,17 @@ export default function Header() {
             <div className="hidden sm:block">
               <ThemeToggle />
             </div>
-
+            {/* Wishlist - Show on desktop */}
+            <Link href="/wishlist" className="hidden sm:block">
+              <Button variant="ghost" size="icon" className="relative">
+                <Heart className="w-5 h-5" />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {wishlistCount}
+                  </span>
+                )}
+              </Button>
+            </Link>
             {/* Cart - Show on desktop */}
             <Link href="/cart" className="hidden sm:block">
               <Button variant="ghost" size="icon" className="relative">

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/stores/auth-store';
-import { AdminSidebar } from './admin-sidebar';
+import { AdminSidebar } from '@/components/layout/admin-sidebar';
 import { Button } from '@/components/ui/button';
 import { 
   Menu, 

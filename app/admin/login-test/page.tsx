@@ -34,7 +34,13 @@ export default function LoginTest() {
         setResult({ success: false, message: 'Login failed', data });
       }
     } catch (error) {
-      setResult({ success: false, message: 'Error occurred', error: error.message });
+      let message = 'Unknown error';
+      if (error instanceof Error) {
+        message = error.message;
+      } else if (typeof error === 'string') {
+        message = error;
+      }
+      setResult({ success: false, message: 'Error occurred', error: message });
     } finally {
       setLoading(false);
     }

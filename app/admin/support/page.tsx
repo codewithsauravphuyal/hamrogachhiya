@@ -342,7 +342,7 @@ export default function AdminSupport() {
                       <Button 
                         size="sm" 
                         variant="outline"
-                        onClick={() => handleAssignTicket(ticket._id, user._id)}
+                        onClick={() => handleAssignTicket(ticket._id, user.id)}
                       >
                         <User className="w-3 h-3 mr-1" />
                         Assign to Me

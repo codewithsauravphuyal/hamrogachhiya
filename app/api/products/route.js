@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import connectDB from '@/database/connection';
-import { Product, Category, Store } from '@/database/mongoose-schema';
+import connectDB from '../../../database/connection';
+import { Product, Category, Store } from '../../../database/mongoose-schema';
 
 export async function GET(request) {
   try {
@@ -94,4 +94,4 @@ export async function GET(request) {
       { status: 500 }
     );
   }
-} 
+}

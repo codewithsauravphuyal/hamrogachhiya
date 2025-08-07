@@ -90,9 +90,6 @@ export default function CategoryGrid() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-30 transition-all duration-300" />
-                  <div className="absolute top-4 left-4 text-3xl">
-                    {category.icon}
-                  </div>
                 </div>
                 
                 <div className="p-3 sm:p-4">

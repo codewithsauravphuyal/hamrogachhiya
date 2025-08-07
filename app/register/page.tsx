@@ -85,7 +85,13 @@ export default function RegisterPage() {
         router.push('/');
       }
     } catch (error) {
-      toast.error(error.message || 'Registration failed. Please try again.');
+      let message = 'Registration failed. Please try again.';
+      if (error instanceof Error) {
+        message = error.message;
+      } else if (typeof error === 'string') {
+        message = error;
+      }
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }

@@ -12,44 +12,31 @@ interface WishlistItem {
 
 interface WishlistStore {
   items: WishlistItem[];
+  itemCount: number;
   addToWishlist: (item: WishlistItem) => void;
   removeFromWishlist: (itemId: string) => void;
   isInWishlist: (itemId: string) => boolean;
   clearWishlist: () => void;
-  itemCount: number;
 }
 
 export const useWishlistStore = create<WishlistStore>()(
   persist(
     (set, get) => ({
       items: [],
-      
+      itemCount: 0,
       addToWishlist: (item) => {
         const { items } = get();
-        const existingItem = items.find(i => i.id === item.id);
-        
-        if (!existingItem) {
-          set({ items: [...items, item] });
+        if (!items.find(i => i.id === item.id)) {
+          const newItems = [...items, item];
+          set({ items: newItems, itemCount: newItems.length });
         }
       },
-      
       removeFromWishlist: (itemId) => {
-        const { items } = get();
-        set({ items: items.filter(item => item.id !== itemId) });
+        const newItems = get().items.filter(item => item.id !== itemId);
+        set({ items: newItems, itemCount: newItems.length });
       },
-      
-      isInWishlist: (itemId) => {
-        const { items } = get();
-        return items.some(item => item.id === itemId);
-      },
-      
-      clearWishlist: () => {
-        set({ items: [] });
-      },
-      
-      get itemCount() {
-        return get().items.length;
-      },
+      clearWishlist: () => set({ items: [], itemCount: 0 }),
+      isInWishlist: (itemId) => get().items.some(item => item.id === itemId),
     }),
     {
       name: 'wishlist-storage',

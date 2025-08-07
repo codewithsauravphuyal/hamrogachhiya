@@ -17,7 +17,7 @@ interface ProductCardProps {
 export default function ProductCard({ product, showStore = false }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const { addItem } = useCartStore();
-  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlistStore();
+  const { addToWishlist, removeFromWishlist, isInWishlist, itemCount: wishlistCount } = useWishlistStore();
   const isWishlisted = isInWishlist(product.id);
 
   const handleAddToCart = () => {
@@ -78,7 +78,8 @@ export default function ProductCard({ product, showStore = false }: ProductCardP
 
   return (
     <div
-      className="group relative bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-md transition-all duration-300"
+      className="group relative bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-md transition-all duration-300 w-full max-w-xs sm:max-w-sm md:max-w-sm lg:max-w-xs xl:max-w-xs"
+      style={{ minWidth: '180px', maxWidth: '220px' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -90,6 +91,7 @@ export default function ProductCard({ product, showStore = false }: ProductCardP
             ? 'bg-red-500 text-white'
             : 'bg-white/80 dark:bg-gray-800/80 text-gray-600 hover:bg-red-500 hover:text-white'
         }`}
+        aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
       >
         <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
       </button>
